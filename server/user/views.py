@@ -1,9 +1,13 @@
 from django.contrib.auth import authenticate
 from django.conf import settings
 from django.middleware import csrf
-from rest_framework import exceptions as rest_exceptions, response, decorators as rest_decorators, permissions as rest_permissions
+from rest_framework import exceptions as rest_exceptions, viewsets, response, decorators as rest_decorators, permissions as rest_permissions
+from rest_framework import viewsets, permissions
+from rest_framework.response import Response
 from rest_framework_simplejwt import tokens, views as jwt_views, serializers as jwt_serializers, exceptions as jwt_exceptions
 from user import serializers, models
+from .models import RecipeRecommender
+from .serializers import RecipeRecommenderSerializer
 
 
 def get_user_tokens(user):
@@ -128,3 +132,20 @@ def user(request):
 
     serializer = serializers.UserSerializer(user)
     return response.Response(serializer.data)
+
+class RecipeRecommenderViewSet(viewsets.ModelViewSet):
+    queryset = RecipeRecommender.objects.all()
+    serializer_class = RecipeRecommenderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def list(self, request):
+        queryset = self.queryset.filter(user=request.user)
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)

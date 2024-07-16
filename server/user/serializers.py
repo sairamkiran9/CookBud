@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from .models import RecipeRecommender
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -45,3 +46,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ("id", "email", "is_staff", "first_name", "last_name")
+
+class RecipeRecommenderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecipeRecommender
+        fields = ['id', 'user', 'recipe', 'ingredients', 'user_review', 'url']
+        read_only_fields = ['user']

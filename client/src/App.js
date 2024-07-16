@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import User from './pages/auth/User'
 import PersistLogin from './components/PersistLogin';
 import Navbar from "./components/Navbar"
+import RecipeRecommender from './pages/recipeRecommender/RecipeRecommender';
 
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
           <Route path='register' element={<Register />}></Route>
           <Route path='user' element={<AuthMiddleware />}>
             <Route index element={<User />}></Route>
+          </Route>
+          <Route path='recommendation' element={<AuthMiddleware />}>
+            <Route index element={<RecipeRecommender />}></Route>
           </Route>
         </Route>
       </Route>
