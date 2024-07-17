@@ -46,9 +46,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ("id", "email", "is_staff", "first_name", "last_name")
-
+        
 class RecipeRecommenderSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecipeRecommender
-        fields = ['id', 'user', 'recipe', 'ingredients', 'user_review', 'url']
+        fields = '__all__'
         read_only_fields = ['user']

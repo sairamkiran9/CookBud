@@ -1,0 +1,98 @@
+/* styles/UserProfileCard.css */
+
+.profile-card {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    width: 300px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.profile-card-header {
+    display: flex;
+    justify-content: flex-end;
+    background-color: yellowgreen;
+    height: 100px;
+    border-radius: 5px 5px 0 0;
+}
+
+.profile-card-info {
+    flex: 1;
+}
+
+.profile-card-close-btn {
+    position: absolute;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #000;
+}
+
+.profile-card-footer {
+    padding: 10px;
+    text-align: center;
+}
+
+
+.profile-card-body {
+    position: relative;
+    z-index: 20;
+    top: -30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-card-avatar {
+    z-index: 2;
+    background-color: lightblue;
+    border-radius: 50%;
+    padding: 15px;
+}
+
+.profile-name {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.profile-email {
+    font-size: 1rem;
+    color: gray;
+}
+
+.btn-logout {
+    background-color: #ff4b5c;
+    /* red color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-logout:hover {
+    background-color: #ff1f3b;
+    /* darker red */
+    transform: scale(1.05);
+    /* slight zoom effect */
+}
+
+.btn-logout:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 75, 92, 0.5);
+}
+
+.btn-logout:disabled {
+    background-color: #ff7b8a;
+    /* lighter red */
+    cursor: not-allowed;
+    transform: none;
+}

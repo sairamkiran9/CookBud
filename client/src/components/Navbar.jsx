@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import UserProfileCard from "./UserProfileCard";
+import ProfileImage from "./ProfileImage";
+import '../styles/Navbar.css';
 
 export default function Navbar() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
+  const [showProfileCard, setShowProfileCard] = useState(false);
+
+  const toggleProfileCard = () => {
+    setShowProfileCard(!showProfileCard);
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -23,8 +32,7 @@ export default function Navbar() {
             <li className='nav-item'><NavLink className={'nav-link'} to={'/'}>Home</NavLink></li>
             {isLoggedIn ? (
               <>
-                <li className='nav-item'><NavLink className={'nav-link'} to={'/auth/user'}>User</NavLink></li>
-                <li className='nav-item'><NavLink className={'nav-link'} to={'/auth/recommendation'}>Recipes</NavLink></li>
+                <li className='nav-item'><NavLink className={'nav-link'} to={'/auth/recommendation'}>Explore</NavLink></li>
               </>
             ) : (
               <>
@@ -33,6 +41,19 @@ export default function Navbar() {
               </>
             )}
           </ul>
+          {isLoggedIn && (
+            <div className="nav-item profile-icon-container">
+              <button
+                className="profile-icon"
+                type="button"
+                aria-expanded="false"
+                onClick={toggleProfileCard}
+              >
+                <ProfileImage name={`${user?.first_name} ${user?.last_name}`} />
+              </button>
+              {showProfileCard && <UserProfileCard user={user} onClose={toggleProfileCard} />}
+            </div>
+          )}
         </div>
       </div>
     </nav>

@@ -1,7 +1,19 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import '../styles/Home.css';
 
 export default function Home() {
     return (
-        <div>Home</div>
-    )
+        <div className='home-container'>
+            <div className='hero-section'>
+                <div className='hero-content'>
+                    <h1>Welcome to Konda's Recipe Recommendation System!</h1>
+                    <p>Discover new recipes tailored to the ingredients you have at home.</p>
+                    <Link to="auth/recommendation" className='btn btn-primary btn-lg'>
+                        Get Started
+                    </Link>
+                </div>
+            </div>
+        </div>
+    );
 }

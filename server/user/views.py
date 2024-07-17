@@ -8,7 +8,7 @@ from rest_framework_simplejwt import tokens, views as jwt_views, serializers as 
 from user import serializers, models
 from .models import RecipeRecommender
 from .serializers import RecipeRecommenderSerializer
-
+from .utils import RecSys
 
 def get_user_tokens(user):
     refresh = tokens.RefreshToken.for_user(user)
@@ -141,11 +141,46 @@ class RecipeRecommenderViewSet(viewsets.ModelViewSet):
     def list(self, request):
         queryset = self.queryset.filter(user=request.user)
         serializer = self.serializer_class(queryset, many=True)
-        return Response(serializer.data)
+        return response.Response(serializer.data)
 
     def create(self, request):
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+        ingredients = request.data.get('ingredients')
+        spice_level = request.data.get('spice_level')
+        cuisine_type = request.data.get('cuisine_type')
+        recommendations = []
+
+        if ingredients and spice_level:
+            try:
+                recommendations = RecSys(ingredients.split(', '), spice_level, cuisine_type, N=5)
+                # Assuming RecSys returns a list of dicts with keys matching your model fields
+                for rec in recommendations:
+                    rec['user'] = request.user
+                    RecipeRecommender.objects.create(**rec)
+                serializer = RecipeRecommenderSerializer(recommendations, many=True)
+                return response.Response(serializer.data)
+            except Exception as e:
+                return response.Response({'error': str(e)}, status=500)
+
+        return response.Response({'error': 'Invalid input'}, status=400)
+
+@rest_decorators.api_view(['POST'])
+@rest_decorators.permission_classes([permissions.IsAuthenticated])
+def recommendationsView(request):
+    ingredients = request.data.get('ingredients')
+    spice_level = request.data.get('spice_level')
+    cuisine_type = request.data.get('cuisine_type')
+    recommendations = []
+
+    if ingredients and spice_level:
+        try:
+            recommendations = RecSys(ingredients.split(', '), spice_level, cuisine_type, N=5)
+            # Assuming RecSys returns a list of dicts with keys matching your model fields
+            for rec in recommendations:
+                rec['user'] = request.user
+                RecipeRecommender.objects.create(**rec)
+            serializer = RecipeRecommenderSerializer(recommendations, many=True)
+            return response.Response(serializer.data)
+        except Exception as e:
+            return response.Response({'error': str(e)}, status=500)
+
+    return response.Response({'error': 'Invalid input'}, status=400)

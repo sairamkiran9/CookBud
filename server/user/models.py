@@ -80,11 +80,13 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 class RecipeRecommender(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipe = models.CharField(max_length=255, default="Unknown Recipe")
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     ingredients = models.TextField(default="")
-    user_review = models.TextField(default="")
-    url = models.URLField(default="/")
+    spice_level = models.CharField(max_length=50, default="")
+    cuisine_type = models.CharField(max_length=50, null=True, blank=True, default="")
+    recipe = models.TextField(default="")  # Example field
+    user_review = models.TextField(default="")  # Example field
+    url = models.URLField(default="")  # Example field
 
     def __str__(self):
-        return f"Recipe Recommendation for {self.user.email}: {self.recipe}"
+        return f'Recommendation for {self.user.email}'

@@ -1,31 +1,39 @@
 // client/src/components/RecipeRecommender.jsx
 
 import React, { useState, useEffect } from 'react';
-import { axiosInstance } from '../../api/apiConfig';
+import useAxiosPrivate from '../../hooks/usePrivate';
 
 const RecipeRecommender = () => {
     const [ingredients, setIngredients] = useState('');
     const [spiceLevel, setSpiceLevel] = useState('Mild');
     const [cuisineType, setCuisineType] = useState('');
     const [recommendations, setRecommendations] = useState([]);
+    const axiosPrivateInstance = useAxiosPrivate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axiosInstance.post('auth/recommendation/', {
+            const response = await axiosPrivateInstance.post('auth/recommendation/', {
                 ingredients,
                 spice_level: spiceLevel,
                 cuisine_type: cuisineType
             });
             setRecommendations(response.data);
+            console.log("here", response)
         } catch (error) {
             console.error('Error fetching recommendations:', error);
         }
     };
 
+    useEffect(() => {
+        if (recommendations.length > 0) {
+            console.log('Recommendations updated:', recommendations);
+        }
+    }, [recommendations]);
+
     return (
         <div className="container">
-            <h1>Welcome to our Recipe Recommendation System!</h1>
+            <h1>Welcome to our Konda's Recipe Recommendation System!</h1>
             <form onSubmit={handleSubmit} className="mb-3">
                 <div className="form-group">
                     <label htmlFor="ingredients">Please enter the ingredients you have in your kitchen:</label>
@@ -77,7 +85,7 @@ const RecipeRecommender = () => {
                         {/* Add more suggestions here */}
                     </datalist>
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <button method="POST" type="submit" className="btn btn-primary">
                     Get Recommendations
                 </button>
             </form>
@@ -89,6 +97,7 @@ const RecipeRecommender = () => {
                             <li key={rec.id} className="list-group-item">
                                 <strong>Recipe:</strong> {rec.recipe}<br />
                                 <strong>Ingredients:</strong> {rec.ingredients}<br />
+                                <strong>Cuisine:</strong> {rec.cuisine_type}<br />
                                 <strong>User Review:</strong> {rec.user_review}<br />
                                 <strong>URL:</strong>{' '}
                                 <a href={rec.url} target="_blank" rel="noopener noreferrer">

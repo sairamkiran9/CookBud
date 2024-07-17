@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from user.views import loginView, registerView, CookieTokenRefreshView, logoutView, user, RecipeRecommenderViewSet
+from user.views import loginView, registerView, CookieTokenRefreshView, logoutView, user, recommendationsView, RecipeRecommenderViewSet
 
 app_name = "user"
 
@@ -14,4 +14,5 @@ urlpatterns = [
     path('logout', logoutView),
     path('user', user),
     path('', include(router.urls)),
+    path('auth/recommendation/', recommendationsView),
 ]

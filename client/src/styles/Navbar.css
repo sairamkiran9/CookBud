@@ -1,0 +1,66 @@
+.profile-icon-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgb(228, 216, 58);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .profile-icon:hover {
+    opacity: 0.8;
+  }
+  
+  .profile-icon:focus {
+    outline: none;
+  }
+  
+  .profile-card {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .profile-card .close-btn {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .profile-card .close-btn button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
+  
+  .profile-card .profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-card .profile-info img {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+  }
+  
+  .profile-card .profile-info h4 {
+    margin: 5px 0;
+  }
+  
