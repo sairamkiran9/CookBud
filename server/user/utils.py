@@ -22,6 +22,12 @@ RECIPES_PATH = settings.RECIPES_PATH
 PARSED_PATH = settings.PARSED_PATH
 TFIDF_ENCODING_PATH = settings.TFIDF_ENCODING_PATH
 TFIDF_MODEL_PATH = settings.TFIDF_MODEL_PATH
+review_value_map = {
+    "Highly recommended!": 4,
+    "Recommended": 3,
+    "Fairly good": 2,
+    "Needs improvement": 1
+}
 
 def ingredient_parser(ingreds):
     '''
@@ -114,4 +120,6 @@ def RecSys(ingredients, spice_level, cuisine_type=None, N=5):
             'url': df_recipes.at[idx, 'recipe_urls']
         }
         recommendations.append(recommendation)
-    return recommendations
+    # Sort the recommendations list based on user_review
+    sorted_recommendations = sorted(recommendations, key=lambda x: review_value_map[x["user_review"]], reverse=True)
+    return sorted_recommendations

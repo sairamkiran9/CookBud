@@ -4,7 +4,7 @@ from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-from decouple import config
+from decouple import config, Csv
 
 # Recommendation System Paths
 RECSYS_ASSETS_PATH = os.path.join(BASE_DIR, 'user', 'assets')
@@ -22,7 +22,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
@@ -128,15 +128,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000"
-]
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv())
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTP_ONLY = True
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000"
-]
+CSRF_TRUSTED_ORIGINS = config('CORS_TRUSTED_ORIGINS', cast=Csv())
 CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = "None"

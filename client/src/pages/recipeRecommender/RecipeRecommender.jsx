@@ -93,7 +93,7 @@ const RecipeRecommender = () => {
                 <div>
                     <h2>Recommendations:</h2>
                     <ul className="list-group">
-                        {recommendations.map((rec) => (
+                        {recommendations && recommendations.length > 0 && recommendations.map((rec) => (
                             <li key={rec.id} className="list-group-item">
                                 <strong>Recipe:</strong> {rec.recipe}<br />
                                 <strong>Ingredients:</strong> {rec.ingredients}<br />

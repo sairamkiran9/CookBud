@@ -1,6 +1,7 @@
 import React from "react";
 
 const ProfileImage = ({ name }) => {
+  console.log(name);
   const nameParts = name.split(" ");
   const firstNameInitial = nameParts[0] ? nameParts[0][0] : "";
   const lastNameInitial = nameParts[1] ? nameParts[1][0] : "";

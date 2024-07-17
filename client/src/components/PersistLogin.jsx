@@ -25,7 +25,7 @@ export default function PersistLogin() {
                 const { data } = await axiosPrivate.get('auth/user')
                 setUser(data)
             } catch (error) {
-                console.log(error?.response)
+                console.log(error)
             } finally {
                 isMounted && setLoading(false)
             }
