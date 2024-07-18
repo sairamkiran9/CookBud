@@ -30,7 +30,7 @@ COPY .env /app/
 COPY . /app/
 
 # Collect static files
-RUN python manage.py migrate
+RUN python manage.py makemigrations && python manage.py migrate
 
 # Expose port 8000 to the outside world
 EXPOSE 8000
