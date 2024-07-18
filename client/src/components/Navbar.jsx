@@ -11,9 +11,9 @@ export default function Navbar() {
   const [showProfileCard, setShowProfileCard] = useState(false);
   const getUser = useUser();
 
-    useEffect(() => {
-        getUser();
-    }, [isLoggedIn]);
+  useEffect(() => {
+    getUser();
+  }, [isLoggedIn]);
 
   const toggleProfileCard = () => {
     setShowProfileCard(!showProfileCard);
@@ -39,6 +39,7 @@ export default function Navbar() {
             {isLoggedIn ? (
               <>
                 <li className='nav-item'><NavLink className={'nav-link'} to={'/auth/recommendation'}>Explore</NavLink></li>
+                {/* <li className='nav-item'><NavLink className={'nav-link'} to={'/auth/user'}>User</NavLink></li> */}
               </>
             ) : (
               <>

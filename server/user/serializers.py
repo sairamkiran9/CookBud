@@ -51,4 +51,4 @@ class RecipeRecommenderSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecipeRecommender
         fields = '__all__'
-        read_only_fields = ['user']
+        # read_only_fields = ['user']

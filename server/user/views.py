@@ -84,8 +84,8 @@ def logoutView(request):
         res.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
         res.delete_cookie("X-CSRFToken")
         res.delete_cookie("csrftoken")
-        res["X-CSRFToken"]=None
-        
+        res["X-CSRFToken"] = None
+
         return res
     except:
         raise rest_exceptions.ParseError("Invalid token")
@@ -133,6 +133,7 @@ def user(request):
     serializer = serializers.UserSerializer(user)
     return response.Response(serializer.data)
 
+
 class RecipeRecommenderViewSet(viewsets.ModelViewSet):
     queryset = RecipeRecommender.objects.all()
     serializer_class = RecipeRecommenderSerializer
@@ -142,7 +143,7 @@ class RecipeRecommenderViewSet(viewsets.ModelViewSet):
         queryset = self.queryset.filter(user=request.user)
         serializer = self.serializer_class(queryset, many=True)
         return response.Response(serializer.data)
-    
+
     def create(self, request):
         ingredients = request.data.get('ingredients')
         spice_level = request.data.get('spice_level')
@@ -151,12 +152,14 @@ class RecipeRecommenderViewSet(viewsets.ModelViewSet):
 
         if ingredients and spice_level:
             try:
-                recommendations = RecSys(ingredients.split(', '), spice_level, cuisine_type, N=5)
+                recommendations = RecSys(ingredients.split(
+                    ', '), spice_level, cuisine_type, N=5)
                 # Assuming RecSys returns a list of dicts with keys matching your model fields
                 for rec in recommendations:
-                    rec['user'] = request.user
+                    # rec['user'] = request.user
                     RecipeRecommender.objects.create(**rec)
-                serializer = RecipeRecommenderSerializer(recommendations, many=True)
+                serializer = RecipeRecommenderSerializer(
+                    recommendations, many=True)
                 return response.Response(serializer.data)
             except Exception as e:
                 return response.Response({'error': str(e)}, status=500)

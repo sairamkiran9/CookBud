@@ -5,6 +5,8 @@ from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 from decouple import config, Csv
+from corsheaders.defaults import default_headers
+
 
 # Recommendation System Paths
 RECSYS_ASSETS_PATH = os.path.join(BASE_DIR, 'user', 'assets')
@@ -133,11 +135,12 @@ CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTP_ONLY = True
 CSRF_TRUSTED_ORIGINS = config('CORS_TRUSTED_ORIGINS', cast=Csv())
-CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
-SESSION_COOKIE_SECURE = True
+CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken", "Authentication"]
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'HTTP_AUTHORIZATION', "AUTHORIZATION", "X-CSRFToken", "csrftoken",
+]
 CSRF_COOKIE_SAMESITE = "None"
 SESSION_COOKIE_SAMESITE = "None"
-
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
