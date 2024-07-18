@@ -1,17 +1,16 @@
 // client/src/components/RecipeRecommender.jsx
 
-import React, { useState, useEffect } from 'react';
-import useAxiosPrivate from '../../hooks/usePrivate';
-import { axiosInstance } from '../../api/apiConfig'
+import React, { useState } from 'react';
+import { axiosFetchRecommendations } from '../../api/apiConfig'
 import useAuth from '../../hooks/useAuth';
-import axios from "axios"
 
 const RecipeRecommender = () => {
     const { accessToken, csrftoken, isLoggedIn, setUser } = useAuth()
     const [ingredients, setIngredients] = useState('');
     const [spiceLevel, setSpiceLevel] = useState('Mild');
     const [cuisineType, setCuisineType] = useState('');
-    const [recommendations, setRecommendations] = useState([]);
+    const [recommendations, setRecommendations] = useState();
+    const [loading, setLoading] = useState(false);
     const API_URL = process.env.REACT_APP_API_URL;
 
     const handleSubmit = async (e) => {
@@ -20,17 +19,10 @@ const RecipeRecommender = () => {
             return
         }
         try {
-            console.log(csrftoken)
-            const response = await axios.post(API_URL + 'auth/recommendation/', {
-                ingredients,
-                spice_level: spiceLevel,
-                cuisine_type: cuisineType
-            }, {headers: {
-                "Authorization": "Bearer " + accessToken,
-                "X-CSRFToken": csrftoken,
-                "Content-Type": "application/json"
-            }});
-            setRecommendations(response.data);
+            setLoading(true);
+            const response = await axiosFetchRecommendations(ingredients, spiceLevel, cuisineType, accessToken, csrftoken);
+            setRecommendations(response);
+            setLoading(false);
         } catch (error) {
             console.error('Error fetching recommendations:', error);
         }
@@ -38,8 +30,8 @@ const RecipeRecommender = () => {
 
     return (
         <div className="container">
-            <h1>Welcome to our Konda's Recipe Recommendation System!</h1>
-            <form onSubmit={handleSubmit} className="mb-3">     
+            <h1>Konda's Recipe Recommendation System!</h1>
+            <form onSubmit={handleSubmit} className="mb-3">
                 <div className="form-group">
                     <label htmlFor="ingredients">Please enter the ingredients you have in your kitchen:</label>
                     <input
@@ -94,12 +86,12 @@ const RecipeRecommender = () => {
                     Get Recommendations
                 </button>
             </form>
-            {recommendations.length > 0 && (
+            {recommendations ? (
                 <div>
                     <h2>Recommendations:</h2>
                     <ul className="list-group">
-                        {recommendations && recommendations.length > 0 && recommendations.map((rec) => (
-                            <li key={rec.id} className="list-group-item">
+                        {recommendations.map((rec, index) => (
+                            <li key={"recommendation_key_" + index} className="list-group-item">
                                 <strong>Recipe:</strong> {rec.recipe}<br />
                                 <strong>Ingredients:</strong> {rec.ingredients}<br />
                                 <strong>Cuisine:</strong> {rec.cuisine_type}<br />
@@ -112,7 +104,7 @@ const RecipeRecommender = () => {
                         ))}
                     </ul>
                 </div>
-            )}
+            ) : loading ? <div>Loading ...</div> : <div/>}
         </div>
     );
 };
