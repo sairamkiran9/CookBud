@@ -8,8 +8,8 @@ export default function UserProfileCard({ user, onClose }) {
     const navigate = useNavigate();
     const logout = useLogout();
 
-    const handleLogout = async () => {
-        await logout();
+    const handleLogout = () => {
+        logout();
         navigate('/');
         onClose();
     };

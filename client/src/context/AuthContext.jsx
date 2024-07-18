@@ -1,29 +1,28 @@
-import { useState, useEffect, createContext } from 'react'
+import { useState, useEffect, createContext } from 'react';
 
 export const AuthContext = createContext({
     user: {},
-    setUser: () => { },
+    setUser: () => {},
     accessToken: null,
     refreshToken: null,
     csrftoken: null,
-    setAccessToken: () => { },
-    setRefreshToken: () => { },
-    setCSRFToken: () => { },
+    setAccessToken: () => {},
+    setRefreshToken: () => {},
+    setCSRFToken: () => {},
     isLoggedIn: false,
-    setIsLoggedIn: () => { },
-})
+    setIsLoggedIn: () => {},
+});
 
 export function AuthContextProvider(props) {
-
-    const [user, setUser] = useState({})
-    const [accessToken, setAccessToken] = useState()
-    const [refreshToken, setRefreshToken] = useState()
-    const [csrftoken, setCSRFToken] = useState()
-    const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLoggedIn')) || false)
+    const [user, setUser] = useState({});
+    const [accessToken, setAccessToken] = useState();
+    const [refreshToken, setRefreshToken] = useState();
+    const [csrftoken, setCSRFToken] = useState();
+    const [isLoggedIn, setIsLoggedIn] = useState(JSON.parse(localStorage.getItem('isLoggedIn')) || false);
 
     useEffect(() => {
-        localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn))
-    }, [isLoggedIn])
+        localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+    }, [isLoggedIn]);
 
     return (
         <AuthContext.Provider value={{
@@ -35,7 +34,7 @@ export function AuthContextProvider(props) {
         }}>
             {props.children}
         </AuthContext.Provider>
-    )
+    );
 }
 
-export default AuthContext
+export default AuthContext;

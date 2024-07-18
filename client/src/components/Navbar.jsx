@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useUser from "../hooks/useUser";
 import UserProfileCard from "./UserProfileCard";
 import ProfileImage from "./ProfileImage";
 import '../styles/Navbar.css';
@@ -8,6 +9,11 @@ import '../styles/Navbar.css';
 export default function Navbar() {
   const { isLoggedIn, user } = useAuth();
   const [showProfileCard, setShowProfileCard] = useState(false);
+  const getUser = useUser();
+
+    useEffect(() => {
+        getUser();
+    }, [isLoggedIn]);
 
   const toggleProfileCard = () => {
     setShowProfileCard(!showProfileCard);

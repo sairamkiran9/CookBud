@@ -6,7 +6,7 @@ export default function useLogout() {
 
     const logout = async () => {
         try {
-            await axiosPrivateInstance.post("auth/logout")
+            // await axiosPrivateInstance.post("auth/logout")
 
             setAccessToken(null)
             setCSRFToken(null)
