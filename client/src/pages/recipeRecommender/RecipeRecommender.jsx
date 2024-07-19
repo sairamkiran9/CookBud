@@ -30,7 +30,7 @@ const RecipeRecommender = () => {
 
     return (
         <div className="container">
-            <h1>Konda's Recipe Recommendation System!</h1>
+            <h1>CookBuddy's Recipe Recommendation System!</h1>
             <form onSubmit={handleSubmit} className="mb-3">
                 <div className="form-group">
                     <label htmlFor="ingredients">Please enter the ingredients you have in your kitchen:</label>

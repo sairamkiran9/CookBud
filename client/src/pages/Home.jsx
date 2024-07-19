@@ -7,7 +7,7 @@ export default function Home() {
         <div className='home-container'>
             <div className='hero-section'>
                 <div className='hero-content'>
-                    <h1>Welcome to Konda's Recipe Recommendation System!</h1>
+                    <h1>Welcome to CookBuddy!</h1>
                     <p>Discover new recipes tailored to the ingredients you have at home.</p>
                     <Link to="auth/recommendation" className='btn btn-primary btn-lg'>
                         Get Started
