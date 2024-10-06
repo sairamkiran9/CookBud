@@ -1,6 +1,8 @@
 # CookBuddy - AI Based recipe recommendation system
 
-This FullStack web project showcases a user authentication and recipe recommendation system developed using Django, React, and Machine Learning. It features user registration, login, logout, and profile data management, alongside a robust recipe recommendation engine. Authentication is managed with JWT (JSON Web Tokens), and the recommendation system leverages the TF-IDF algorithm for accurate and relevant suggestions. The frontend of the application is hosted on AWS S3, and CloudFront is used as a CDN to deliver content quickly and efficiently to users. The backend is hosted using docker conatiner on EC2. 🔗 [Demo Link](https://drive.google.com/file/d/1Yp3sEGMDyrm9HqDNFD2joMEHQmRFzXm-/view?usp=sharing)
+CookBuddy is an innovative recipe recommender that enhances the cooking experience by offering personalized meal suggestions based on user preferences and available ingredients. Built using <b>Python Django</b> for the backend and <b>ReactJS</b> for the frontend, CookBuddy creates a seamless and dynamic user interface that makes exploring new recipes both fun and intuitive.
+
+Using <b>NLP with the TF-IDF algorithm</b>, the application analyzes ingredients and user preferences to deliver highly relevant and tailored recipe recommendations. It leverages the power of <b>AWS Cloud</b> for scalability, with the frontend hosted on </b>S3 using a CDN</b> for fast, global delivery, and the backend running on <b>EC2</b>, ensuring reliable and high-performance operations. Whether you're a busy professional or a home chef, CookBuddy delivers curated recipe suggestions that inspire culinary creativity, making it a must-have tool in the modern kitchen!. 🔗 [Demo Link](https://drive.google.com/file/d/1Yp3sEGMDyrm9HqDNFD2joMEHQmRFzXm-/view?usp=sharing)
 
 ![alt text](resource/architecture.png)
 
